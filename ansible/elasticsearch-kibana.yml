@@ -5,4 +5,4 @@
   roles:
   - elasticsearch-kibana
   vars:
-    ansible_user: hunter
+    ansible_user: esadmin

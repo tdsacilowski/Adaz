@@ -1,19 +1,19 @@
 ---
-- name: Ensure necessary Microsoft features are installed
-  win_feature:
-    name: "{{ item }}"
-    state: present
-  with_items:
-  # Available features can be listed using Get-WindowsFeature
-  - AD-Domain-Services
-  - RSAT-AD-AdminCenter
-  - RSAT-ADDS-Tools
-  tags: base
+# - name: Ensure necessary Microsoft features are installed
+#   win_feature:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#   # Available features can be listed using Get-WindowsFeature
+#   - AD-Domain-Services
+#   - RSAT-AD-AdminCenter
+#   - RSAT-ADDS-Tools
+#   tags: base
  
-- name: Generate random s afe mode password TODO
-  set_fact:
-    #safe_mode_password: "{{ lookup('password', 'safe_mode_password.txt length=32') }}"
-    safe_mode_password: testesttww111.
+# - name: Generate random s afe mode password TODO
+#   set_fact:
+#     #safe_mode_password: "{{ lookup('password', 'safe_mode_password.txt length=32') }}"
+#     safe_mode_password: testesttww111.
 
 - name: Ensure domain is created
   win_domain:

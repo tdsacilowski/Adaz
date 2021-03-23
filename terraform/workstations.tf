@@ -12,6 +12,8 @@ resource "azurerm_network_interface" "workstation" {
     private_ip_address = cidrhost(var.workstations_subnet_cidr, 10+count.index)
     public_ip_address_id = azurerm_public_ip.workstation[count.index].id
   }
+
+  tags = var.tags
 }
 
 resource "azurerm_network_interface_security_group_association" "workstation" {
@@ -20,6 +22,7 @@ resource "azurerm_network_interface_security_group_association" "workstation" {
   network_interface_id      = azurerm_network_interface.workstation[count.index].id
   network_security_group_id = azurerm_network_security_group.windows.id
 }
+
 resource "azurerm_virtual_machine" "workstation" {
   count = length(local.domain.workstations)
   
@@ -64,9 +67,12 @@ resource "azurerm_virtual_machine" "workstation" {
       }
   }
 
-  tags = {
-    kind = "workstation"
-  }
+  tags = merge(
+    var.tags,
+    {
+      kind = "workstation"
+    }
+  )
 }
 
 

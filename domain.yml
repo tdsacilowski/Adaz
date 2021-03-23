@@ -1,40 +1,36 @@
 # FQDN of your domain
-dns_name: hunter.lab
+dns_name: adtesting.lab
 
 # Hostname of the domain controller
 dc_name: DC-1
 
 # Credentials of the initial domain admin
 initial_domain_admin:
-  username: hunter
-  password: Hunt3r123.
+  username: testadmin
+  password: Test123456!
 
 organizational_units: {}
 
 # Domain users - by default, password := username
 users:
-- username: christophe
-- username: brent
-- username: dany
-  password: Dany123
-- username: karen
+- username: test-user
+- username: vault-admin
+  password: Test123456!
 
 # Domain groups
 groups:
-- dn: CN=Hunters,CN=Users
-  members: [christophe, dany]
+- dn: CN=Test,CN=Users
+  members: [test-user]
 
 # Credentials of the local admin created on all workstations
 default_local_admin:
   username: localadmin
-  password: Localadmin!
+  password: Test123456!
 
 # Workstations to create and to domain-join
 workstations:
-- name: XTOF-WKS
-  local_admins: [christophe]
-- name: DANY-WKS
-  local_admins: [dany]
+- name: TEST-WKS
+  local_admins: [test-user]
 
 # Should the Windows firewall be enabled?
 enable_windows_firewall: no

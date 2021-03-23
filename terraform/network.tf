@@ -3,6 +3,8 @@ resource "azurerm_virtual_network" "main" {
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
+
+  tags = var.tags
 }
 
 resource "azurerm_subnet" "servers" {
@@ -75,6 +77,32 @@ resource "azurerm_network_security_group" "windows" {
     source_address_prefix      = "${local.public_ip}/32"
     destination_address_prefix = "*"
   }
+
+  security_rule {
+    name                       = "Allow-LDAP"
+    priority                   = 104
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "389"
+    source_address_prefix      = "${local.public_ip}/32"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "Allow-LDAPS"
+    priority                   = 105
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "636"
+    source_address_prefix      = "${local.public_ip}/32"
+    destination_address_prefix = "*"
+  }
+
+  tags = var.tags
 }
 
 resource "azurerm_network_security_group" "elasticsearch_kibana" {
@@ -93,6 +121,7 @@ resource "azurerm_network_security_group" "elasticsearch_kibana" {
     source_address_prefix      = "${local.public_ip}/32"
     destination_address_prefix = "*"
   }
+  
   security_rule {
     name                       = "Allow-Kibana"
     priority                   = 101
@@ -104,4 +133,6 @@ resource "azurerm_network_security_group" "elasticsearch_kibana" {
     source_address_prefix      = "${local.public_ip}/32"
     destination_address_prefix = "*"
   }
+
+  tags = var.tags
 }

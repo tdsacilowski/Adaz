@@ -16,11 +16,15 @@ resource "azurerm_network_interface" "elasticsearch" {
     private_ip_address = cidrhost(var.servers_subnet_cidr, 100)
     public_ip_address_id = azurerm_public_ip.elasticsearch.id
   }
+
+  tags = var.tags
 }
+
 resource "azurerm_network_interface_security_group_association" "elasticsearch" {
   network_interface_id      = azurerm_network_interface.elasticsearch.id
   network_security_group_id = azurerm_network_security_group.elasticsearch_kibana.id
 }
+
 resource "azurerm_virtual_machine" "es_kibana" {
   
   name                  = "es-kibana"
@@ -71,7 +75,10 @@ resource "azurerm_virtual_machine" "es_kibana" {
     command = "/bin/bash -c 'source venv/bin/activate && ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook elasticsearch-kibana.yml -v'"
   }
 
-  tags = {
-    kind = "elasticsearch"
-  }
+  tags = merge(
+    var.tags,
+    {
+      kind = "elasticsearch"
+    }
+  )
 }

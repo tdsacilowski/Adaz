@@ -3,7 +3,7 @@
   hosts: elasticsearch
   gather_facts: no
   vars:
-    ansible_user: hunter
+    ansible_user: testadmin
   tasks:
   - name: Upgrade all packages to the latest version
     apt:

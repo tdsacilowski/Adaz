@@ -4,6 +4,8 @@ resource "azurerm_public_ip" "main" {
   resource_group_name     = azurerm_resource_group.main.name
   allocation_method       = "Static"
   idle_timeout_in_minutes = 30
+
+  tags = var.tags
 }
 
 resource "azurerm_public_ip" "workstation" {
@@ -13,6 +15,8 @@ resource "azurerm_public_ip" "workstation" {
   resource_group_name     = azurerm_resource_group.main.name
   allocation_method       = "Static"
   idle_timeout_in_minutes = 30
+
+  tags = var.tags
 }
 
 resource "azurerm_public_ip" "elasticsearch" {
@@ -21,4 +25,6 @@ resource "azurerm_public_ip" "elasticsearch" {
   resource_group_name     = azurerm_resource_group.main.name
   allocation_method       = "Static"
   idle_timeout_in_minutes = 30
+
+  tags = var.tags
 }
